@@ -1,3 +1,3 @@
-# Osa 0
+# FullstackOpen
 
-Tehtäviä selaimen ja palvelimen kommunikaatiosta
+Fullstack openin tehtävät
