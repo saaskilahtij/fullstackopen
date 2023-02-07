@@ -17,6 +17,7 @@ sequenceDiagram
   Note right of Browser: main.js pyytää JSON dataa palvelimelta
   
   Browser ->> Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
-  Server -->> Browser: Palvelin siirtää JSON tiedoston datan selaimelle
+  Server -->> Browser: Palvelin siirtää JSON (data.json) tiedoston datan selaimelle
   Note right of Browser: Tapahtumankäsittelijä renderöi datan selaimelle
+
 ```
