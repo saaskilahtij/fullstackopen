@@ -18,5 +18,5 @@ sequenceDiagram
   
   Browser ->> Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
   Server -->> Browser: Palvelin siirtää JSON tiedoston datan selaimelle
-
+  Note right of Browser: Tapahtumankäsittelijä renderöi datan selaimelle
 ```
