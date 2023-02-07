@@ -1,2 +1,3 @@
-# Fullstackopen
-Fullstack Open tehtävät
+# Osa0
+
+Tehtäviä selaimen ja palvelimen kommunikaatiosta
