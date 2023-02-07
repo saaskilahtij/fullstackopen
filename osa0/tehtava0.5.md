@@ -2,9 +2,15 @@
 sequenceDiagram
 
 
-  Browser ->> Server (nginx/1.18.0): POST https://studies.cs.helsinki.fi/exampleapp/new_note
-  Note right of browser: Selain lähettää lomakkeen datan palvelimelle POST -pyyntönä onnistuneesti (201)
+  Browser ->> Server: HTTPT GET https://studies.cs.helsinki.fi/exampleapp/spa
+  Server -->> Browser: HTML lähdekoodi 
+  Browser ->> Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+  Server ->> Browser: CSS lähdekoodi (main.css)
+  Browser ->> Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
+  Server ->> Browser: Javascript lähdekoodi (spa.js)
+  Note right of Browser: spa.js pyytää JSON datan palvelimelta
+  Browser ->> Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+  Server ->> Browser: Palvelin siirtää JSON tiedoston datan selaimelle
+  Note right of Browser: Tapahtumankäsittelijä renderöi datan selaimelle
   
-
-
 ```

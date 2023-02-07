@@ -11,8 +11,8 @@ sequenceDiagram
   Server ->> Browser: CSS lähdekoodi (main.css)
   Browser ->> Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
   Server ->> Browser: Javascript lähdekoodi (main.js)
-  Note right of browser: Selaimen JS-koodi pyytää JSON dataa palvelimelta
+  Note right of browser: main.js pyytää JSON dataa palvelimelta
   Browser ->> Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
   Server ->> Browser: Palvelin siirtää JSON tiedoston datan selaimelle
-  
+
 ```
