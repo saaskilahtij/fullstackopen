@@ -1,56 +1,72 @@
-const Header = ({course}) => {
+const Header = ({props}) => {
   return (
-    <h1>{course}</h1>
-  )
-} 
+    <h1>{props.kurssinNimi}</h1>
+    );
+  }; 
+  
+  
+  const Content = ({props}) => {
+    return (
+    <div>
+      <Osa props={props.osat[0]}/>
+      <Osa props={props.osat[1]}/>
+      <Osa props={props.osat[2]}/>
+    </div>
+  );
+};
 
 
-const Content = ({part1, exercise1, part2, exercise2, part3, exercise3}) => {
+const Total = ({props}) => {
   return (
     <div>
       <p>
-        {part1} {exercise1}
-      </p>
-      <p>
-        {part2} {exercise2}
-      </p>
-      <p>
-        {part3} {exercise3}
+      Number of exercises { props.osat[0].tehtavienLkm + 
+      props.osat[1].tehtavienLkm + props.osat[2].tehtavienLkm }
       </p>
     </div>
-  )
-}
+  );
+};
 
 
-const Total = ({exercises}) => {
+const Osa = ({props}) => {
   return (
     <div>
-      <p>Number of exercises {exercises}</p>
+      <p>
+        {props.nimi} {props.tehtavienLkm}
+      </p>
     </div>
-  )
-} 
+  );
+};
 
 
 const App = () => {
-  const course = 'Half Stack application development'
-  const part1 = 'Fundamentals of React'
-  const exercises1 = 10
-  const part2 = 'Using props to pass data'
-  const exercises2 = 7
-  const part3 = 'State of a component'
-  const exercises3 = 14
 
+  const sisalto = {
+    kurssinNimi: 'Half Stack application development',
+
+    osat: [
+      {
+        nimi: 'Fundamentals of React',
+        tehtavienLkm: 10
+      },
+      {
+        nimi: 'Using props to pass data',
+        tehtavienLkm: 7
+      },
+      {
+        nimi: 'State of a component',
+        tehtavienLkm: 14
+      }
+    ]
+  };
+    
   return (
     <div>
-      <Header course={course}/>
-      <Content 
-      part1={part1} exercise1={exercises1} 
-      part2={part2} exercise2={exercises2} 
-      part3={part3} exercise3={exercises3}
-      />
-      <Total exercises={exercises1 + exercises2 + exercises3}/>
+      <Header props={sisalto}/>
+      <Content props={sisalto}/>
+      <Total props={sisalto}/>
     </div>
-  )
-}
+  );
+};
 
 export default App;
