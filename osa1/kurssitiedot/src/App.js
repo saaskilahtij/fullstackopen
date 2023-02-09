@@ -1,7 +1,5 @@
 const Header = ({props}) => {
-  return (
-    <h1>{props.kurssinNimi}</h1>
-    );
+  return <h1>{props.kurssinNimi}</h1>;
   }; 
   
   
@@ -43,7 +41,6 @@ const App = () => {
 
   const sisalto = {
     kurssinNimi: 'Half Stack application development',
-
     osat: [
       {
         nimi: 'Fundamentals of React',
