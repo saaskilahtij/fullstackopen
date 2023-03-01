@@ -2,6 +2,10 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 
 
+
+// Toteuta tilastojen näyttäminen HTML:n taulukkona
+// Taulukon formatointi on minulle mysteeri
+
 const Statistics = (props) => {
 
   if (props.all == 0) {  
@@ -9,22 +13,30 @@ const Statistics = (props) => {
   } else {
     return (
       <div>
-        <StatisticLine title="good" value={props.good}/>
-        <StatisticLine title="neutral" value={props.neutral}/>
-        <StatisticLine title="bad" value={props.bad}/>
-        <StatisticLine title="all" value={props.all}/>
-        <StatisticLine title="average" value={props.average}/>
-        <StatisticLine title="positive" value={props.positive}/>
+        <StatisticLine title="good" value={props.good} width='45'/>
+        <StatisticLine title="neutral" value={props.neutral} width='33'/>
+        <StatisticLine title="bad" value={props.bad} width='55'/>
+        <StatisticLine title="all" value={props.all} width='62'/>
+        <StatisticLine title="average" value={props.average} width='48'/>
+        <StatisticLine title="positive" value={props.positive} width='61'/>
       </div>
     )
   }
 }
 
 
-const StatisticLine = ({title, value}) => {
-  const displayValue = title === "positive" ? `${value} %` : value;
+const StatisticLine = ({title, value, width}) => {
+  const displayValue = title === "positive" ? `${value}%` : value;
   return (
-    <p>{title}: {displayValue}</p>
+    <table>
+      <tbody>
+        <tr>
+        <td> {title}: </td> 
+        <td style={{textAlign: 'right', width:`${width}px`}}> {displayValue} </td>
+        </tr>
+      </tbody>
+    </table>
+    
   )
 }
 
@@ -44,7 +56,7 @@ function App() {
   const [all, setAll] = useState(0);
   const [average, setAverage] = useState(0);
   const [positive, setPositive] = useState(0);
-
+  
   const handleGood = () => {
     setGood(good + 1);
   }
@@ -63,6 +75,9 @@ function App() {
     setPositive(all === 0 ? 0 : (good * 1) / all * 100);
   }, [good, neutral, bad, all]);
 
+  var roundedPos = positive.toFixed(2);
+  var roundedAvg = average.toFixed(2);
+
   return (
     <div>
       <h1>give feedback</h1>
@@ -71,8 +86,8 @@ function App() {
       <Button name="bad" handle={handleBad}/>
       <h1>statistics</h1>
       <Statistics good={good} neutral={neutral} 
-      bad={bad} all={all} average={average}
-      positive={positive}/>
+      bad={bad} all={all} average={roundedAvg}
+      positive={roundedPos}/>
     </div>
   );
 }
