@@ -3,7 +3,7 @@ const Header = ({props}) => {
   }; 
   
   
-  const Content = ({props}) => {
+const Content = ({props}) => {
     return (
     <div>
       <Osa props={props.osat[0]}/>
