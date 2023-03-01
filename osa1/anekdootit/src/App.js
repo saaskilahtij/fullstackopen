@@ -1,6 +1,12 @@
 import { useState } from 'react';
 
 
+const Button = ({name, handle}) => {
+  return (
+    <button onClick={handle}> {name} </button>
+  )
+} 
+
 
 function App() {
   const [selected, setSelected] = useState(0)
@@ -16,13 +22,14 @@ function App() {
     'The only way to go fast, is to go well.'
   ]
 
-  const handleAnecdote = () => {
-    let randomInt = Math.floor(Math.random() * 8);
+  const generateInt = () => {
+    setSelected(Math.floor(Math.random() * 8));
   }
 
   return (
     <div>
-      {anecdotes[selected]}
+      <h1>{anecdotes[selected]}</h1>
+      <Button handle={generateInt} name='next anecdote'/>
     </div>
   )
 }
