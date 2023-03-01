@@ -9,7 +9,7 @@ const Button = ({name, handle}) => {
 
 
 function App() {
-  const [selected, setSelected] = useState(0)
+  const [selected, setSelected] = useState(0);
   
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -20,15 +20,25 @@ function App() {
     'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.',
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when dianosing patients.',
     'The only way to go fast, is to go well.'
-  ]
+  ];
+  
+  const points = [0, 0, 0, 0, 0, 0, 0, 0];
+  const copy = [...points];
 
   const generateInt = () => {
     setSelected(Math.floor(Math.random() * 8));
   }
+  const handleVote = () => {
+    copy[selected] += 1;
+    console.log(copy);
+  }
+ 
+  // Aina kun generateInt, niin alustaa copy listan
 
   return (
     <div>
       <h1>{anecdotes[selected]}</h1>
+      <Button handle={handleVote} name='vote'/>
       <Button handle={generateInt} name='next anecdote'/>
     </div>
   )
