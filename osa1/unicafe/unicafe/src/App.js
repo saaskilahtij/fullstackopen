@@ -17,7 +17,7 @@ const Statistics = (props) => {
         <StatisticLine title="neutral" value={props.neutral} width='33'/>
         <StatisticLine title="bad" value={props.bad} width='55'/>
         <StatisticLine title="all" value={props.all} width='62'/>
-        <StatisticLine title="a verage" value={props.average} width='48'/>
+        <StatisticLine title="average" value={props.average} width='48'/>
         <StatisticLine title="positive" value={props.positive} width='61'/>
       </div>
     )

@@ -8,6 +8,19 @@ const Button = ({name, handle}) => {
 } 
 
 
+const MostVoted = ({votes, anecdotes}) => {
+  
+  const mostVoted = votes.indexOf(Math.max(...votes));
+  
+  return (
+    <div>
+      <h1>Anecdote with most votes</h1>
+      <p>{anecdotes[mostVoted]}</p>
+    </div>
+  )
+}
+
+
 function App() {
   const [selected, setSelected] = useState(0);
   
@@ -22,24 +35,24 @@ function App() {
     'The only way to go fast, is to go well.'
   ];
   
-  const points = [0, 0, 0, 0, 0, 0, 0, 0];
-  const copy = [...points];
-
+  const [points, setPoints] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
+  
   const generateInt = () => {
     setSelected(Math.floor(Math.random() * 8));
   }
+
   const handleVote = () => {
+    const copy = [...points];
     copy[selected] += 1;
-    console.log(copy);
+    setPoints(copy);
   }
- 
-  // Aina kun generateInt, niin alustaa copy listan
 
   return (
     <div>
       <h1>{anecdotes[selected]}</h1>
       <Button handle={handleVote} name='vote'/>
       <Button handle={generateInt} name='next anecdote'/>
+      <MostVoted votes={points} anecdotes={anecdotes}/>
     </div>
   )
 }
