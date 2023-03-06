@@ -1,4 +1,6 @@
 
+// Laajenna sovellusta siten että kursseja voi olla
+// mielivaltainen määrä
 
 const Course = ({ course }) => {
   
