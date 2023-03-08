@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
+import noteService from './services/notes'
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import PersonList from './components/PersonList';
-import axios from 'axios';
+
 
 
 const App = () => {
@@ -13,6 +14,8 @@ const App = () => {
   const [filter, setFilter] = useState('');
   const [notes, setNotes] = useState([]);
 
+
+  // Muuta noteServicen kanssa kutsuttavaksi
   const hook = () => {
     axios
     .get('http://localhost:3001/persons')
@@ -24,7 +27,7 @@ const App = () => {
 
   useEffect(hook, []);
 
-
+  // Tallenna serverille noteService create avulla
   const addName = (event) => {
     event.preventDefault();
   
@@ -43,6 +46,7 @@ const App = () => {
       alert(`${newName} is already on the phonebook`);
     }
   }
+
 
   const handleNameChange = (event) => {
     setNewName(event.target.value);
