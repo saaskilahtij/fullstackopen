@@ -3,7 +3,6 @@ import React from "react";
 
 const PersonForm =  (props) => {
 
-    console.log(props.number);
     return (
         <div>
             <h2>add a new</h2>
