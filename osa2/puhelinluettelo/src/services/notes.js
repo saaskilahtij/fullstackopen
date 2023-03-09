@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseURL = http://localhost:3001/persons;
+const baseURL = 'http://localhost:3001/persons';
 
 const getAll = () => {
     const request = axios.get(baseURL);
@@ -17,4 +17,10 @@ const update = ({ id, newObject }) => {
     return request.then(response => response.data);
 }
 
-export default {getAll, create, update};
+// Tänne vaiko erillinen komponentti?
+const deleteName = () => {
+
+}
+
+
+export default {getAll, create, update, deleteName};

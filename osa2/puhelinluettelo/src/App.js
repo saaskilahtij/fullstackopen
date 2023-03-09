@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import noteService from './services/notes'
 import Filter from './components/Filter';
+import DeleteName from './components/DeleteName';
 import PersonForm from './components/PersonForm';
 import PersonList from './components/PersonList';
 
@@ -15,19 +16,14 @@ const App = () => {
   const [notes, setNotes] = useState([]);
 
 
-  // Muuta noteServicen kanssa kutsuttavaksi
-  const hook = () => {
-    axios
-    .get('http://localhost:3001/persons')
-    .then(response => {
-      console.log('Promise fulfilled');
-      setNotes(response.data);
-    })
-  }
+  useEffect(() =>
+    noteService
+    .getAll()
+    .then(initialNotes => {
+      setNotes(initialNotes);
+    }), []);
 
-  useEffect(hook, []);
-
-  // Tallenna serverille noteService create avulla
+  // Tallenna serverille noteService screate avulla
   const addName = (event) => {
     event.preventDefault();
   
@@ -47,18 +43,22 @@ const App = () => {
     }
   }
 
+  const deleteName = () => {
+
+  }
+
 
   const handleNameChange = (event) => {
     setNewName(event.target.value);
-  }
+  };
 
   const handleNumberChange = (event) => {
     setNewNumber(event.target.value);
-  }
+  };
 
   const handleFilterChange = (event) => {
     setFilter(event.target.value);
-  }
+  };
 
   const personsToShow = notes.filter(person => 
     person.name.toLowerCase().startsWith(filter.toLowerCase().trim())
