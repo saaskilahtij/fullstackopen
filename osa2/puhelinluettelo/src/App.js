@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import noteService from './services/notes'
 import Filter from './components/Filter';
-import DeleteName from './components/DeleteName';
 import PersonForm from './components/PersonForm';
 import PersonList from './components/PersonList';
 
+
+// handleDeletion ei ota noteseja vastaan: undefined
 
 
 const App = () => {
@@ -16,12 +17,13 @@ const App = () => {
   const [notes, setNotes] = useState([]);
 
 
-  useEffect(() =>
+  useEffect(() => {
     noteService
     .getAll()
     .then(initialNotes => {
       setNotes(initialNotes);
-    }), []);
+    }) 
+    },[]);
 
   // Tallenna serverille noteService screate avulla
   const addName = (event) => {
@@ -42,22 +44,26 @@ const App = () => {
       alert(`${newName} is already on the phonebook`);
     }
   }
-
-  const deleteName = () => {
-
-  }
-
-
+  
   const handleNameChange = (event) => {
     setNewName(event.target.value);
   };
-
+  
   const handleNumberChange = (event) => {
     setNewNumber(event.target.value);
   };
-
+  
   const handleFilterChange = (event) => {
     setFilter(event.target.value);
+  };
+  
+  const handleDeletion = ({ notes }) => {
+
+    console.log(notes);
+    
+    /* noteService
+    .remove(notes.id)
+    .then() */
   };
 
   const personsToShow = notes.filter(person => 
@@ -79,7 +85,9 @@ const App = () => {
       </form>    
       <h2>Numbers</h2>
       <div>
-        <PersonList persons={personsToShow}/>
+        <PersonList 
+          persons={personsToShow}
+          handleDeletion={handleDeletion}/>
       </div>
     </div>
   )
