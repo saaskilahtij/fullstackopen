@@ -6,7 +6,7 @@ import PersonList from './components/PersonList';
 
 
 // handleDeletion ei ota noteseja vastaan: undefined
-
+// npx json-server --port=3001 --watch db.json
 
 const App = () => {
     
@@ -57,13 +57,13 @@ const App = () => {
     setFilter(event.target.value);
   };
   
-  const handleDeletion = ({ notes }) => {
+  const handleDeletion = ({ personToDelete }) => {
 
-    console.log(notes);
+    console.log(personToDelete.id);
     
-    /* noteService
-    .remove(notes.id)
-    .then() */
+    noteService
+    .remove(personToDelete.id)
+    .then()
   };
 
   const personsToShow = notes.filter(person => 
