@@ -29,10 +29,10 @@ const update = ({ id, newObject }) => {
         console.log('error updating an object')
             throw error;
         });
-
 }
 
 const remove = ({ id }) => {
+    
     const request = axios.delete(`${baseURL}/${id}`);
     return request
         .then(response => response.data)

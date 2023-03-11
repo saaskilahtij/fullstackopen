@@ -5,43 +5,65 @@ import PersonForm from './components/PersonForm';
 import PersonList from './components/PersonList';
 
 
-// handleDeletion ei ota noteseja vastaan: undefined
-// npx json-server --port=3001 --watch db.json
+// Comment this code for added understanding!
+// 
+
 
 const App = () => {
-    
 
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [filter, setFilter] = useState('');
   const [notes, setNotes] = useState([]);
-
+  const [deletedNote] = useState(null);
 
   useEffect(() => {
+    
     noteService
     .getAll()
     .then(initialNotes => {
       setNotes(initialNotes);
     }) 
-    },[]);
+    },[deletedNote]);
+  
 
-  // Tallenna serverille noteService screate avulla
   const addName = (event) => {
     event.preventDefault();
   
-    const isNameInList = notes.some(person => person.name === newName);
+    const isNameInList = notes.some(person =>
+      person.name.toLowerCase().replace(/\s+/g, '') === newName.toLowerCase().replace(/\s+/g, ''));
   
+    const person = {
+      name: newName,
+      number: newNumber,
+      key: notes.length + 1
+    };
+
     if (!isNameInList) {
-      const person = {
-        name: newName,
-        number: newNumber,
-        key: notes.length + 1
-      };
       setNotes(notes.concat(person));
       setNewName('');
       setNewNumber('');
     } else {
-      alert(`${newName} is already on the phonebook`);
+      
+      const result = window.confirm(
+        `${newName} is already added to phonebook, replace the old number with a new one?
+      `);
+
+      if (result) {
+        
+        const updatedPerson = {...notes.find((p) => p.name === newName), number: newNumber};
+
+        noteService
+        .update({id: updatedPerson.id, newObject: updatedPerson})
+        .then(() => {
+          const notesUpdatedWithNewNumber = notes.map((p) => 
+            p.id === updatedPerson.id ? updatedPerson : p
+          );
+          setNotes(notesUpdatedWithNewNumber);
+          setNewName('');
+          setNewNumber(''); 
+        }); 
+      }
     }
   }
   
@@ -57,18 +79,24 @@ const App = () => {
     setFilter(event.target.value);
   };
   
-  const handleDeletion = ({ personToDelete }) => {
+  const handleDeletion = ({ id, name }) => {
 
-    console.log(personToDelete.id);
+    const result = window.confirm(`Delete ${name} ?`) 
+
+    if (result) {
+      noteService
+      .remove({id: id})
+      .then(() => {
+        setNotes(notes.filter(person => person.id !== id))
+      });
+    }
     
-    noteService
-    .remove(personToDelete.id)
-    .then()
   };
-
+  //person.id !== id
   const personsToShow = notes.filter(person => 
     person.name.toLowerCase().startsWith(filter.toLowerCase().trim())
   );
+
 
   return (
     <div>
@@ -87,7 +115,8 @@ const App = () => {
       <div>
         <PersonList 
           persons={personsToShow}
-          handleDeletion={handleDeletion}/>
+          handleDeletion={handleDeletion}
+        />
       </div>
     </div>
   )

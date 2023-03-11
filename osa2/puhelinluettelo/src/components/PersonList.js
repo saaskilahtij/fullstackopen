@@ -11,10 +11,11 @@ const PersonList = ({ persons, handleDeletion }) => {
                     <ShowPerson key={person.key}
                     personNumber={person.number}
                     personName={person.name}/>
-                    <button onClick={handleDeletion}>
+                    <button onClick={() => handleDeletion(person)}>
                         delete
                     </button>
                 </ul>
+                
             )}
         </div>
     );
