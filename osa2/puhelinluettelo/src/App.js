@@ -3,19 +3,18 @@ import noteService from './services/notes'
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import PersonList from './components/PersonList';
+import Notification from './components/Notification';
 
 
 // Comment this code for added understanding!
-// 
-
-
+// Delete message vielä! Stailaus valmis!
 const App = () => {
 
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [filter, setFilter] = useState('');
   const [notes, setNotes] = useState([]);
-  const [deletedNote] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
 
   useEffect(() => {
     
@@ -24,10 +23,10 @@ const App = () => {
     .then(initialNotes => {
       setNotes(initialNotes);
     }) 
-    },[deletedNote]);
+    },[notes]);
   
 
-  const addName = (event) => {
+const addName = (event) => {
     event.preventDefault();
   
     const isNameInList = notes.some(person =>
@@ -36,13 +35,23 @@ const App = () => {
     const person = {
       name: newName,
       number: newNumber,
-      key: notes.length + 1
     };
 
     if (!isNameInList) {
-      setNotes(notes.concat(person));
+  
+      noteService
+      .create(person)
+      .then(() => {
+        notes.concat(person);
+      });
       setNewName('');
       setNewNumber('');
+      setSuccessMessage(`Added ${newName}`);
+      
+      setTimeout(() => {
+        setSuccessMessage(null)
+      }, 5000);
+
     } else {
       
       const result = window.confirm(
@@ -50,7 +59,6 @@ const App = () => {
       `);
 
       if (result) {
-        
         const updatedPerson = {...notes.find((p) => p.name === newName), number: newNumber};
 
         noteService
@@ -61,7 +69,11 @@ const App = () => {
           );
           setNotes(notesUpdatedWithNewNumber);
           setNewName('');
-          setNewNumber(''); 
+          setNewNumber('');
+          setSuccessMessage(`Updated ${newName}`);
+          setTimeout(() => {
+            setSuccessMessage(null)
+          }, 5000);
         }); 
       }
     }
@@ -101,6 +113,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={successMessage}/>
       <form>
         <div>
           <Filter filter={filter} onChange={handleFilterChange}/>
