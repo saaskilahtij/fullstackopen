@@ -1,5 +1,5 @@
 ```mermaid
-
+//
 sequenceDiagram
 
   Browser ->> Server: HTTPT GET https://studies.cs.helsinki.fi/exampleapp/spa
