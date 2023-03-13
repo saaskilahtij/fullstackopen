@@ -15,6 +15,9 @@ const App = () => {
   const [filter, setFilter] = useState('');
   const [notes, setNotes] = useState([]);
   const [successMessage, setSuccessMessage] = useState(null);
+  const [notificationStyle, setNotificationStyle] = useState('');
+
+
 
   useEffect(() => {
     
@@ -46,8 +49,8 @@ const addName = (event) => {
       });
       setNewName('');
       setNewNumber('');
+      setNotificationStyle('success');
       setSuccessMessage(`Added ${newName}`);
-      
       setTimeout(() => {
         setSuccessMessage(null)
       }, 5000);
@@ -70,6 +73,7 @@ const addName = (event) => {
           setNotes(notesUpdatedWithNewNumber);
           setNewName('');
           setNewNumber('');
+          setNotificationStyle('success');
           setSuccessMessage(`Updated ${newName}`);
           setTimeout(() => {
             setSuccessMessage(null)
@@ -101,6 +105,12 @@ const addName = (event) => {
       .then(() => {
         setNotes(notes.filter(person => person.id !== id))
       });
+      
+      setNotificationStyle('success');
+      setSuccessMessage(`${name} deleted succesfully`);
+      setTimeout(() => {
+        setSuccessMessage(null)
+      }, 5000);
     }
     
   };
@@ -113,7 +123,7 @@ const addName = (event) => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={successMessage}/>
+      <Notification message={successMessage} style={notificationStyle}/>
       <form>
         <div>
           <Filter filter={filter} onChange={handleFilterChange}/>
